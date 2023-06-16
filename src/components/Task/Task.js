@@ -7,6 +7,7 @@ export const Task = ({ task }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
+    console.log(task.id);
     dispatch(deleteTask(task.id));
   };
 

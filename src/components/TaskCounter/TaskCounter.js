@@ -7,17 +7,18 @@ export const TaskCounter = () => {
 
   const count = tasks.reduce(
     (acc, task) => {
-      if (!task.completed) {
-        acc.active += 1;
-      } else {
+      if (task.completed) {
         acc.completed += 1;
+      } else {
+        acc.active += 1;
       }
       return acc;
     },
-
-    { active: 0, completed: 0 }
+    {
+      active: 0,
+      completed: 0,
+    }
   );
-  console.log('count:', count);
 
   return (
     <div>

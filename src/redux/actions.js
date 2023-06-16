@@ -10,7 +10,7 @@ export const addTask = text => {
 export const deleteTask = taskId => {
   return {
     type: 'tasks/deleteTask',
-    action: taskId,
+    payload: taskId,
   };
 };
 

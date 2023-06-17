@@ -1,7 +1,8 @@
 // import { devToolsEnhancer } from '@redux-devtools/extension';
 
 import { configureStore } from '@reduxjs/toolkit';
-import { tasksReducer, filtersReducer } from './reducer';
+import { tasksReducer } from './tasksSlice';
+import { filtersReducer } from './filtersSlice';
 
 // const { createStore } = require('redux');
 

@@ -2,7 +2,9 @@ import { Task } from 'components/Task/Task';
 import css from './TaskList.module.css';
 import { useSelector } from 'react-redux';
 import { statusFilters } from 'redux/constants';
-import { getStatusFilter, getTasks } from 'redux/selectors';
+import { getStatusFilter } from 'redux/selectors';
+import { useQuery } from '@tanstack/react-query';
+import { getTasks } from 'services/api';
 
 const getVisibleTasks = (tasks = [], statusFilter) => {
   switch (statusFilter) {
@@ -18,10 +20,11 @@ const getVisibleTasks = (tasks = [], statusFilter) => {
 };
 
 export const TaskList = () => {
-  const tasks = useSelector(getTasks);
+  const query = useQuery({ queryKey: ['tasks'], queryFn: getTasks });
+
   const statusFilter = useSelector(getStatusFilter);
 
-  const visibleTasks = getVisibleTasks(tasks, statusFilter);
+  const visibleTasks = getVisibleTasks(query.data, statusFilter);
 
   return (
     <ul className={css.list}>

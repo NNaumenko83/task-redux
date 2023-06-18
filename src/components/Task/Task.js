@@ -1,19 +1,33 @@
 import { MdClose } from 'react-icons/md';
 import css from './Task.module.css';
-import { useDispatch } from 'react-redux';
-import { deleteTask, toggleCompleted } from 'redux/operations';
-
-// import { deleteTask, toggleCompleted } from 'redux/tasksSlice';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteTask, toggleCompleted } from 'services/api';
 
 export const Task = ({ task }) => {
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const deleteTaskMutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
+
+  const toggleCompletedMutation = useMutation({
+    mutationFn: toggleCompleted,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
 
   const handleDelete = () => {
-    dispatch(deleteTask(task.id));
+    deleteTaskMutation.mutate(task.id);
   };
 
   const handleToggle = () => {
-    dispatch(toggleCompleted(task));
+    toggleCompletedMutation.mutate(task);
   };
 
   return (

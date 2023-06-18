@@ -3,7 +3,7 @@ import { AppBar } from 'components/AppBar/AppBar';
 import { TaskForm } from 'components/TaskForm/TaskForm';
 import { TaskList } from 'components/TaskList/TaskList';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';

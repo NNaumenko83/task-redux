@@ -4,17 +4,35 @@ import { TaskForm } from 'components/TaskForm/TaskForm';
 import { TaskList } from 'components/TaskList/TaskList';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const queryClient = new QueryClient();
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+});
 
 export const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
       <Layout>
         <AppBar />
         <TaskForm />
         <TaskList />
       </Layout>
-    </QueryClientProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </PersistQueryClientProvider>
   );
 };

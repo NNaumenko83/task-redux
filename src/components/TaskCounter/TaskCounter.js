@@ -1,29 +1,38 @@
-import { useSelector } from 'react-redux';
 import css from './TaskCounter.module.css';
-import { getTasks } from 'redux/selectors';
+
+import { useTasks } from 'hooks/useTasks';
 
 export const TaskCounter = () => {
-  const tasks = useSelector(getTasks);
+  const { data: tasks, isLoading } = useTasks();
+  console.log('isLoading:', isLoading);
+  console.log('tasks:', tasks);
 
-  const count = tasks.reduce(
-    (acc, task) => {
-      if (task.completed) {
-        acc.completed += 1;
-      } else {
-        acc.active += 1;
+  let count = {};
+  if (tasks) {
+    count = tasks.reduce(
+      (acc, task) => {
+        if (task.completed) {
+          acc.completed += 1;
+        } else {
+          acc.active += 1;
+        }
+        return acc;
+      },
+      {
+        active: 0,
+        completed: 0,
       }
-      return acc;
-    },
-    {
-      active: 0,
-      completed: 0,
-    }
-  );
+    );
+  }
 
   return (
     <div>
-      <p className={css.text}>Active: {count.active}</p>
-      <p className={css.text}>Completed: {count.completed}</p>
+      <p className={css.text}>
+        Active: {isLoading ? <span>isLoading...</span> : count.active}
+      </p>
+      <p className={css.text}>
+        Completed: {isLoading ? <span>isLoading...</span> : count.completed}
+      </p>
     </div>
   );
 };

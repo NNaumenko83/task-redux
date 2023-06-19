@@ -3,8 +3,6 @@ import css from './TaskList.module.css';
 import { useSelector } from 'react-redux';
 import { statusFilters } from 'redux/constants';
 import { getStatusFilter } from 'redux/selectors';
-import { useQuery } from '@tanstack/react-query';
-import { getTasks } from 'services/api';
 import { useTasks } from 'hooks/useTasks';
 
 const getVisibleTasks = (tasks = [], statusFilter) => {

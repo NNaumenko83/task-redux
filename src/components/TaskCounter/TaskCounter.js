@@ -1,10 +1,10 @@
 import css from './TaskCounter.module.css';
+import { RotatingLines } from 'react-loader-spinner';
 
 import { useTasks } from 'hooks/useTasks';
 
 export const TaskCounter = () => {
-  const { data: tasks, isLoading, fetchStatus, isFetching } = useTasks();
-  console.log('isFetching:', isFetching);
+  const { data: tasks, isFetching } = useTasks();
 
   let count = {};
   if (tasks) {
@@ -26,12 +26,33 @@ export const TaskCounter = () => {
 
   return (
     <div>
-      {isFetching && <p>Fetching</p>}
       <p className={css.text}>
-        Active: {isLoading ? <span>isLoading...</span> : count.active}
+        Active:{' '}
+        {isFetching ? (
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="15"
+            visible={true}
+          />
+        ) : (
+          count.active
+        )}
       </p>
       <p className={css.text}>
-        Completed: {isLoading ? <span>isLoading...</span> : count.completed}
+        Completed:{' '}
+        {isFetching ? (
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="15"
+            visible={true}
+          />
+        ) : (
+          count.completed
+        )}
       </p>
     </div>
   );

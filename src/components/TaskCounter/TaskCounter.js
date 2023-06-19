@@ -3,9 +3,8 @@ import css from './TaskCounter.module.css';
 import { useTasks } from 'hooks/useTasks';
 
 export const TaskCounter = () => {
-  const { data: tasks, isLoading } = useTasks();
-  console.log('isLoading:', isLoading);
-  console.log('tasks:', tasks);
+  const { data: tasks, isLoading, fetchStatus, isFetching } = useTasks();
+  console.log('isFetching:', isFetching);
 
   let count = {};
   if (tasks) {
@@ -27,6 +26,7 @@ export const TaskCounter = () => {
 
   return (
     <div>
+      {isFetching && <p>Fetching</p>}
       <p className={css.text}>
         Active: {isLoading ? <span>isLoading...</span> : count.active}
       </p>
